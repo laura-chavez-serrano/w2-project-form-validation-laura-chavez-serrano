@@ -4,7 +4,7 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
     clearError()
     /// variables
 
-    var name2 = document.getElementById('name').value;
+    
     var caryear2 = document.getElementById('car-year').value;
     var carmake2 = document.getElementById('car-make').value;
     var carmodel2 = document.getElementById('car-model').value;
@@ -16,16 +16,15 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
 
 
     // check and make sure name is not empty and validate
+    
+    var field_value = document.getElementById('name').value;
+    var field = 'name';
+    var id = 'Name';
+    var divname = "name-field"
+    field_value == '' ? showEmptyNameErrorname(field, id, divname) : validatext(divname)
+    
+    
 
-    if (name2 == '') {
-        var field = 'name';
-        var id = 'Name';
-        var divname = "name-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-        var divname = "name-field"
-        validatext(divname)
-    };
     if (caryear2 == '') {
         field = 'car-year';
         id = 'Car Year'
