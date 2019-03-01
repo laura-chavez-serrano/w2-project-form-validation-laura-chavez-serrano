@@ -2,104 +2,70 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
     event.preventDefault()
 
     clearError()
-    /// variables
-
     
-    var caryear2 = document.getElementById('car-year').value;
-    var carmake2 = document.getElementById('car-make').value;
-    var carmodel2 = document.getElementById('car-model').value;
-    var startdate2 = document.getElementById('start-date').value;
-    var days2 = document.getElementById('days').value;
-    var creditcard2 = document.getElementById('credit-card').value;
-    var cvv2 = document.getElementById('cvv').value;
-    var expiration2 = document.getElementById('expiration').value;
 
 
     // check and make sure name is not empty and validate
     
-    var field_value = document.getElementById('name').value;
-    var field = 'name';
-    var id = 'Name';
-    var divname = "name-field"
-    field_value == '' ? showEmptyNameErrorname(field, id, divname) : validatext(divname)
+        var field_value = document.getElementById('name').value;
+        var field = 'name';
+        var id = 'Name';
+        var divname = "name-field";
+        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validatext(divname)
     
     
-
-    if (caryear2 == '') {
+        field_value = document.getElementById('car-year').value;
         field = 'car-year';
-        id = 'Car Year'
-        divname = "car-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-        var divname = "car-field"
-
-        validacar(divname, caryear2)
-    }
-    if (carmake2 == '') {
+        id = 'Car Year';
+        divname = "car-field";
+        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validacar(divname, field_value);
+    
+        field_value = document.getElementById('car-make').value;
         field = 'car-make';
         id = 'Car Make';
-        divname = "car-field"
-        showEmptyNameErrorname(field, id, divname)
-    }
+        divname = "car-field";
+        field_value == '' ? showEmptyNameErrorname(field, id, divname);
+    
 
-    if (carmodel2 == '') {
+        field_value = document.getElementById('car-model').value;
         field = 'car-model';
         id = 'Car Model';
-        divname = "car-field"
-        showEmptyNameErrorname(field, id, divname)
-    }
+        divname = "car-field";
+        field_value == '' ? showEmptyNameErrorname(field, id, divname);
 
 
-
-    if (startdate2 == '') {
+        field_value = document.getElementById('start-date').value;
         field = 'start-date';
         id = 'Date';
         divname = "start-date-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-        field = 'start-date';
-        divname = "start-date-field";
-        validadate(field, startdate2, divname);
-    }
-    if (days2 == '') {
+        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validadate(field, field_value, divname);
+    
+        field_value = document.getElementById('days').value;
         field = 'days';
         id = 'Days';
-        divname = "days-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-        field = 'days';
-        id = 'Days';
-        divname = "days-field"
-        validnumber(field, days2, divname)
-    }
-    if (creditcard2 == '') {
+        divname = "days-field";
+        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validnumber(field, field_value, divname)
+
+        
+         field_value = document.getElementById('credit-card').value;
          field = 'credit-card';
          id = 'Credit Card';
          divname = "credit-card-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-         divname = "credit-card-field"
-        validateCardNumber(creditcard2)
-    }
-    if (cvv2 == '') {
+         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validateCardNumber(creditcard2)
+
+         field_value = document.getElementById('cvv').value;
          field = 'cvv';
          id = 'CVV';
-         divname = "cvv-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
          divname = "cvv-field";
-         field = 'cvv';
-        validcvv(field, divname, cvv2)
-    }
-    if (expiration2 == '') {
+         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validcvv(field, divname, cvv2)
+    
+    
+        field_value = document.getElementById('expiration').value;
          field = 'expiration';
          id = 'Expiration';
          divname = "expiration-field"
-        showEmptyNameErrorname(field, id, divname)
-    } else {
-         divname = "expiration-field"
-        validaexpiration(divname, expiration2)
-    }
+         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validaexpiration(divname, expiration2)
+    
 
     if (fall) {
         ftotal(startdate2, days2)
