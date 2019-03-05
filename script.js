@@ -97,17 +97,34 @@ function clearError() {
     return fall = true;
 }
 ///messages
-function showEmptyNameErrorname(field, id, divname) {
-    var errorDiv = document.createElement('div')
-    errorDiv.classList.add('error-msg')
-    var message = id + ' ' + "cannot be blank"
-    errorDiv.innerText = message
-    var field = document.getElementById(field)
-    field.parentElement.appendChild(errorDiv)
-    field.classList.add('&.alert-lg')
-    document.getElementById(divname).classList.add("input-invalid");
-    return fall = false;
+// function showEmptyNameErrorname(field, id, divname) {
+//     var errorDiv = document.createElement('div')
+//     errorDiv.classList.add('error-msg')
+//     var message = id + ' ' + "cannot be blank"
+//     errorDiv.innerText = message
+//     var field = document.getElementById(field)
+//     field.parentElement.appendChild(errorDiv)
+//     field.classList.add('&.alert-lg')
+//     document.getElementById(divname).classList.add("input-invalid");
+//     return fall = false;
+// }
+function showEmptyNameErrorname(inputDiv, invalidInputs) {
+    inputDiv.classList.add("input-invalid");
+    var errorMsgs = [];
+    for (var input of invalidInputs) {
+        if (input.value.trim() === "") {
+            errorMsgs.push(getInputName(input) + " is required");
+        } else {
+            errorMsgs.push("Invalid " + getInputName(input));
+        }
+    }
+
+    var errorMsg = document.createElement("div");
+    errorMsg.classList.add("input-hint");
+    errorMsg.innerText = errorMsgs.join("; ");
+    inputDiv.appendChild(errorMsg);
 }
+
 
 // total calculation and message
 function ftotal(startdate2, days2) {
