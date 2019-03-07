@@ -138,33 +138,20 @@ function validadate(inputValue) {
 };
 
 //validate number of days number and between 1-30
-function validnumber(field, days2, divname) {
-    error = false;
-    if (isNaN(days2)) {error = true;
+function validnumber(inputValue) {
+    
+    if (isNaN(inputValue)) {return false;} 
+    else {
+        if (inputValue >= 1 && inputValue <= 30) {
+            return true
+        };
 
-    } else {
-        if (days2 >= 1 && days2 <= 30) {
-            document.getElementById(divname).classList.add("input-valid");
-        } else {error = true}
-
-    }
-    if (error) {
-        var errorDiv = document.createElement('div')
-    errorDiv.classList.add('error-msg')
-    var message = 'NUMBER OF DAYS MUST BE BETWEEN 1-30'
-    errorDiv.innerText = message
-    var field = document.getElementById('cvv')
-    field.parentElement.appendChild(errorDiv)
-    field.classList.add('&.alert-lg')
-    document.getElementById(divname).classList.add("input-invalid");
-    return fall = false;
     }
 };
 // ////credit card validation
-function validateCardNumber(number) {
+function validateCardNumber(inputValue) {
     var regex = new RegExp("^[0-9]{16}$");
-    if (!regex.test(number))
-        return false;
+    if (!regex.test(inputValue)) return false;
 
     return luhnCheck(number);
 };
@@ -183,51 +170,37 @@ function luhnCheck(val) {
     }
     return (sum % 10) == 0;
 };
+
 //valida CVV must be a three-digit number
-function validcvv(field, divname, cvv2) {
+function validcvv(inputValue) {
     var Max_Length = 3;
     var length = document.getElementById("cvv").value.length;
-    var error = false;
-    if (isNaN(cvv2)) {
-        error = true
-    } else {
+    
+    if (isNaN(inputValue)) {return false;} 
+     else {
         if (length == Max_Length) {
-            document.getElementById(divname).classList.add("input-valid");
-        } else {
-            error = true
-        }
+            return true}
     }
-   
 };
 
 // expiration validation
-function validaexpiration(divname, expiration2) {
-    var validexpiration = false;
-    var cdate = new Date();
-    var cyear = cdate.getFullYear();
-    cyear = cyear - 2000
+function validaexpiration(inputValue) {
+    var year = parseInt("20" + inputValue.split("/")[1]);
+    var month = parseInt(inputValue.split("/")[0]);
+    debugger
+    if (isNaN(year) || isNaN(month)) {
+        return false;
+    }
 
-    expiration2 = expiration2.split('/');
-    if (expiration2.length != 2) {
-        validexpiration = true
+    var cardDate = new Date(year, month - 1);
+    var currentDate = new Date();
+    if (cardDate.getFullYear() < currentDate.getFullYear()) {
+        return false;
+    } else if (cardDate.getFullYear() > currentDate.getFullYear()) {
+        return true;
+    } else if (cardDate.getMonth() >= currentDate.getMonth() ){
+        return true;
     } else {
-
-        //Día especificado en la fecha recibida.
-        var mes = expiration2[0];
-        //Módulo acumulado del mes especificado en la fecha recibida.
-        var anno = expiration2[1];
-
-        if ((mes > 1) && (mes <= 12)) {
-            validexpiration = false
-            document.getElementById(divname).classList.add("input-valid")
-
-            if ((anno >= cyear)) {
-                validexpiration = false
-                document.getElementById(divname).classList.add("input-valid");
-            } else {
-
-            };
-        } else {validexpiration = true};
-
+        return false;
     }
 };
