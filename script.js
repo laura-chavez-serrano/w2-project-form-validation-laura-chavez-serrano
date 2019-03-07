@@ -116,68 +116,27 @@ function validacar(inputValue) {
         var cdate = new Date();
         var cyear = cdate.getFullYear();
         // valida year >1990 and future if not send send error
-        if ((caryear2 > fix) && (caryear2 <= cyear)) {
-            document.getElementById(divname).classList.add("input-valid");
+        if ((inputValue > fix) && (inputValue <= cyear)) {
+            return true;
         }
         //if no valid send message
         else { return false}
     }
-    // if (error) {
-    //     var errorDiv = document.createElement('div')
-    // errorDiv.classList.add('error-msg')
-    // var message = 'CAR YEAR NEEDS TO BE AFTER 1990'
-    // errorDiv.innerText = message
-    // var field = document.getElementById('car-year')
-    // field.parentElement.appendChild(errorDiv)
-    // field.classList.add('&.alert-lg')
-    // document.getElementById(divname).classList.add("input-invalid");
-    // return fall = false;} else {
-    //     document.getElementById(divname).classList.add("input-valid");
-    // }
 };
 
 // validate DateParking 
-function validadate(field, startdate2, divname) {
+function validadate(inputValue) {
     ///today
-
     var cdate = new Date();
-    var cday = cdate.getDate();
-    var cmonth = cdate.getMonth();
-    var cyear = cdate.getFullYear();
+
     ///screen
-    var ddate = new Date(startdate2);
-    var dday = ddate.getDate();
-    dday = dday + 1;
-    var dmonth = ddate.getMonth();
-    var dyear = ddate.getFullYear();
-    var validad = true;
+    var sdate = new Date(inputValue);
+    
+   
     // if today is <= screen input ask for the month 
-    if (dyear >= cyear) {
-        validad = false;
-        if (cmonth <= dmonth) {
-            validad = false;
-            if (cday < dday) {
-                validad = false;
-            } else {
-                validad = true
-            }
-        } else {
-            validad = true
-        }
-    }
-    if (validad) {
-        var errorDiv = document.createElement('div')
-    errorDiv.classList.add('error-msg')
-    var message = 'DATE NEEDS TO BE IN FUTURE'
-    errorDiv.innerText = message
-    var field = document.getElementById('start-date')
-    field.parentElement.appendChild(errorDiv)
-    field.classList.add('&.alert-lg')
-    document.getElementById(divname).classList.add("input-invalid");
-    return fall = false;} else {
-        document.getElementById(divname).classList.add("input-valid");
-    }
+    return sdate > cdate;
 };
+
 //validate number of days number and between 1-30
 function validnumber(field, days2, divname) {
     error = false;
@@ -208,7 +167,7 @@ function validateCardNumber(number) {
         return false;
 
     return luhnCheck(number);
-}
+};
 
 function luhnCheck(val) {
     var sum = 0;
@@ -238,17 +197,7 @@ function validcvv(field, divname, cvv2) {
             error = true
         }
     }
-    if (error) {
-        var errorDiv = document.createElement('div')
-    errorDiv.classList.add('error-msg')
-    var message = 'CVV MUST TO BE 3 NUMBERS'
-    errorDiv.innerText = message
-    var field = document.getElementById('cvv')
-    field.parentElement.appendChild(errorDiv)
-    field.classList.add('&.alert-lg')
-    document.getElementById(divname).classList.add("input-invalid");
-    return fall = false;
-    }
+   
 };
 
 // expiration validation
@@ -280,17 +229,5 @@ function validaexpiration(divname, expiration2) {
             };
         } else {validexpiration = true};
 
-    }
-    if (validexpiration) {
-        var errorDiv = document.createElement('div')
-    errorDiv.classList.add('error-msg')
-    var message = 'EXPIRATION DATE INCORRECT'
-    errorDiv.innerText = message
-    var field = document.getElementById('expiration')
-    field.parentElement.appendChild(errorDiv)
-    field.classList.add('&.alert-lg')
-    document.getElementById(divname).classList.add("input-invalid");
-    return fall = false;} else {
-        document.getElementById(divname).classList.add("input-valid");
     }
 };
