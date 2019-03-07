@@ -1,113 +1,33 @@
 document.getElementById('parking-form').addEventListener('submit', function (event) {
     event.preventDefault()
+// clean error message
 
-    clearError()
-    
-
-
-    // check and make sure name is not empty and validate
-    
-        var field_value = document.getElementById('name').value;
-        var field = 'name';
-        var id = 'Name';
-        var divname = "name-field";
-        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validatext(divname)
-    
-    
-        field_value = document.getElementById('car-year').value;
-        field = 'car-year';
-        id = 'Car Year';
-        divname = "car-field";
-        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validacar(divname, field_value);
-    
-        field_value = document.getElementById('car-make').value;
-        field = 'car-make';
-        id = 'Car Make';
-        divname = "car-field";
-        field_value == '' ? showEmptyNameErrorname(field, id, divname);
-    
-
-        field_value = document.getElementById('car-model').value;
-        field = 'car-model';
-        id = 'Car Model';
-        divname = "car-field";
-        field_value == '' ? showEmptyNameErrorname(field, id, divname);
-
-
-        field_value = document.getElementById('start-date').value;
-        field = 'start-date';
-        id = 'Date';
-        divname = "start-date-field"
-        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validadate(field, field_value, divname);
-    
-        field_value = document.getElementById('days').value;
-        field = 'days';
-        id = 'Days';
-        divname = "days-field";
-        field_value == '' ? showEmptyNameErrorname(field, id, divname) : validnumber(field, field_value, divname)
-
-        
-         field_value = document.getElementById('credit-card').value;
-         field = 'credit-card';
-         id = 'Credit Card';
-         divname = "credit-card-field"
-         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validateCardNumber(creditcard2)
-
-         field_value = document.getElementById('cvv').value;
-         field = 'cvv';
-         id = 'CVV';
-         divname = "cvv-field";
-         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validcvv(field, divname, cvv2)
-    
-    
-        field_value = document.getElementById('expiration').value;
-         field = 'expiration';
-         id = 'Expiration';
-         divname = "expiration-field"
-         field_value == '' ? showEmptyNameErrorname(field, id, divname) : validaexpiration(divname, expiration2)
-    
-
-    if (fall) {
-        ftotal(startdate2, days2)
+    for (var errorMessage of document.querySelectorAll(".input-hint")) {
+        errorMessage.remove();
+        var invalidInputs = [];
     }
+// review inputs
+    var inputDivs = document.getElementsByClassName("input-field");
+        for (var inputDiv of inputDivs) {
+            inputDiv.classList.remove("input-invalid");
+            inputDiv.classList.remove("input-valid");
 
-})
-
-/////functions
-
-////clears 
-function clearError() {
-    var all = ['name', 'car-year', 'car-make', 'car-model', 'start-date', 'days', 'credit-card', 'cvv', 'expiration']
-    for (var i = 0; i < all.length; i++) {
-        var borra = all[i]
-        var field = document.getElementById(borra)
-        field.classList.remove('error')
-        // same as: field.parentElement.getElementsByClassName('.error-msg')[0]
-        var errorMsg = field.parentElement.querySelector('.error-msg')
-        if (errorMsg) {
-            errorMsg.remove()
-
+            // validate input if "! false" move to invalidInputs
+            for (var input of inputDiv.getElementsByTagName("input")) {
+                if (!validateInput(input)) {
+                    invalidInputs.push(input);
+                }
+            }
+// if errors send message to screen
+            if (invalidInputs.length > 0) {
+                showEmptyNameErrorname(inputDiv, invalidInputs);
+            } else {
+                inputDiv.classList.add("input-valid");
+            }
         }
-        ///clean total
-        var divname = document.getElementById('total')
-        field.classList.remove('total')
-        var message = ""
-        divname.innerText = message
-    }
-    return fall = true;
-}
-///messages
-// function showEmptyNameErrorname(field, id, divname) {
-//     var errorDiv = document.createElement('div')
-//     errorDiv.classList.add('error-msg')
-//     var message = id + ' ' + "cannot be blank"
-//     errorDiv.innerText = message
-//     var field = document.getElementById(field)
-//     field.parentElement.appendChild(errorDiv)
-//     field.classList.add('&.alert-lg')
-//     document.getElementById(divname).classList.add("input-invalid");
-//     return fall = false;
-// }
+    });
+        
+///messages errors
 function showEmptyNameErrorname(inputDiv, invalidInputs) {
     inputDiv.classList.add("input-invalid");
     var errorMsgs = [];
@@ -125,53 +45,65 @@ function showEmptyNameErrorname(inputDiv, invalidInputs) {
     inputDiv.appendChild(errorMsg);
 }
 
+// validate input
+function validateInput(input) {
+    var inputValue = input.value.trim();
+    if (inputValue === "") {
+        return false;
+    }
 
-// total calculation and message
-function ftotal(startdate2, days2) {
-
-
-    var total = "";
-    var i = days2;
-    var ddate = new Date(startdate2);
-    ddate.setDate(ddate.getDate() + 1);
-    var total1 = 0
-    var total2 = 0
-
-    do {
-
-        var dyear = ddate.getFullYear();
-        var dmonth = (1 + ddate.getMonth()).toString();
-        dmonth = dmonth.length > 1 ? dmonth : '0' + dmonth;
-        var dday = ddate.getDate().toString();
-        var dow = ddate.getDay()
-
-        if (dow == 0 || dow == 6) {
-            total1 = 7 + total1
-        } else if (dow !== '') {
-            total2 = 5 + total2
-        };
-
-
-        ddate.setDate(ddate.getDate() + 1);
-        i = i - 1;
-
-    } while (i >= 0);
-    var dow = 0
-    dow = total1 + total2;
-
-    ///////////message to screen
-    var divname = document.getElementById('total')
-    divname.classList.add('total')
-    var message = "Total:" + ' ' + dow
-    divname.innerText = message
-
-};
-
-
-///validate fields when is not empty for all except car-year/date/days
-function validatext(divname) {
-    document.getElementById(divname).classList.add("input-valid");
+    switch (input.id) {
+        case "name":
+            return true;
+        case "car-year":
+            return validatecar(inputValue);
+        case "car-make":
+            return true;
+        case "car-model":
+            return true;
+        case "start-date":
+            return validadate();
+        case "days":
+            return validnumber(inputValue);
+        case "credit-card":
+            return validateCardNumber(inputValue);
+        case "cvv":
+            return validcvv(inputValue);
+        case "expiration":
+            return validaexpiration(inputValue);
+        default:
+            return true;
+    }
 }
+//  get name of input for message
+function getInputName(input) {
+    switch (input.id) {
+        case "name":
+            return "Name";
+        case "car-year":
+            return "Year";
+        case "car-make":
+            return "Make";
+        case "car-model":
+            return "Model";
+        case "start-date":
+            return "Parking Date";
+        case "days":
+            return "Number of Days";
+        case "credit-card":
+            return "Credit Card Number";
+        case "cvv":
+            return "CVV";
+        case "expiration":
+            return "Expiration Date";
+        default:
+            return "";
+    }
+}
+
+    
+
+
 
 //valida CVV must be a three-digit number
 function validcvv(field, divname, cvv2) {
@@ -361,4 +293,52 @@ function luhnCheck(val) {
         sum += intVal;
     }
     return (sum % 10) == 0;
+};
+///clean total
+var divname = document.getElementById('total')
+field.classList.remove('total')
+var message = ""
+divname.innerText = message
+}
+return fall = true;
+}
+
+// total calculation and message
+function ftotal(startdate2, days2) {
+
+
+    var total = "";
+    var i = days2;
+    var ddate = new Date(startdate2);
+    ddate.setDate(ddate.getDate() + 1);
+    var total1 = 0
+    var total2 = 0
+
+    do {
+
+        var dyear = ddate.getFullYear();
+        var dmonth = (1 + ddate.getMonth()).toString();
+        dmonth = dmonth.length > 1 ? dmonth : '0' + dmonth;
+        var dday = ddate.getDate().toString();
+        var dow = ddate.getDay()
+
+        if (dow == 0 || dow == 6) {
+            total1 = 7 + total1
+        } else if (dow !== '') {
+            total2 = 5 + total2
+        };
+
+
+        ddate.setDate(ddate.getDate() + 1);
+        i = i - 1;
+
+    } while (i >= 0);
+    var dow = 0
+    dow = total1 + total2;
+    ///////////message to screen
+    var divname = document.getElementById('total')
+    divname.classList.add('total')
+    var message = "Total:" + ' ' + dow
+    divname.innerText = message
+
 };
