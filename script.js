@@ -3,7 +3,7 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
 // clean error message
 
     for (var errorMessage of document.querySelectorAll(".input-hint")) {
-        errorMessage.remove();
+        errorMessage.remove() ; var total = false
         
     }
 // review inputs and clean messages
@@ -17,7 +17,8 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
             for (var input of inputDiv.getElementsByTagName("input")) {
                 
                 if (!validateInput(input)) {
-                    invalidInputs.push(input);  
+                    invalidInputs.push(input); 
+                    total = true 
                 }
             }
             
@@ -53,7 +54,7 @@ function showEmptyNameErrorname(inputDiv, invalidInputs) {
 function validateInput(input) {
     var inputValue = input.value.trim();
     if (inputValue === "") {
-        return false;
+        return false; 
     }
     switch (input.id) {
         case "name":
@@ -203,4 +204,8 @@ function validaexpiration(inputValue) {
     } else {
         return false;
     }
+};
+
+function Calculatotal(){
+
 };
