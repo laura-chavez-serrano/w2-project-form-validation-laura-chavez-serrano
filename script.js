@@ -3,7 +3,7 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
 // clean error message
 
     for (var errorMessage of document.querySelectorAll(".input-hint")) {
-        errorMessage.remove() ; var total = false
+        errorMessage.remove() ; 
         
     }
 // review inputs and clean messages
@@ -18,7 +18,7 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
                 
                 if (!validateInput(input)) {
                     invalidInputs.push(input); 
-                    total = true 
+                    
                 }
             }
             
@@ -206,6 +206,30 @@ function validaexpiration(inputValue) {
     }
 };
 
-function Calculatotal(){
+function CalculaTotal() {
+    var parkingDate = getParkingDate();
+    if (!parkingDate) {
+        return;
+    }
 
-};
+    var numDays = parseInt(document.getElementById('days').value.trim());
+
+    if (isNaN(numDays)) {
+        return;
+    }
+
+    var Cost = 0;
+    for (var idx = 0; idx < numDays; idx++) {
+        var isWeekEnd = (parkingDate.getDay() % 6 === 0);
+        if (isWeekEnd) {
+            Cost += 7;
+        } else {
+            Cost += 5;
+        }
+        parkingDate.setHours(24);
+    }
+
+    var costDiv = document.getElementById('total');
+    costDiv.innerText = '$' + Cost;
+    return Cost;
+}
