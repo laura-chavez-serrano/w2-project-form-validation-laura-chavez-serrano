@@ -1,5 +1,6 @@
 document.getElementById('parking-form').addEventListener('submit', function (event) {
     event.preventDefault()
+    error = false
 // clean error message
 
     for (var errorMessage of document.querySelectorAll(".input-hint")) {
@@ -30,6 +31,13 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
                 inputDiv.classList.add("input-valid");
             }
         }
+// totals if no errors in the format
+
+        if (!error) {CalculaTotal();
+        } else {
+            var costDiv = document.getElementById('total');
+    costDiv.innerText = '';
+        };
     });
         
 ///messages errors
@@ -48,6 +56,7 @@ function showEmptyNameErrorname(inputDiv, invalidInputs) {
     errorMsg.classList.add("input-hint");
     errorMsg.innerText = errorMsgs.join("; ");
     inputDiv.appendChild(errorMsg);
+    error = true
 }
 
 // validate input
@@ -127,13 +136,11 @@ function validacar(inputValue) {
 
 // validate DateParking 
 function validadate(inputValue) {
+    
     ///today
     var cdate = new Date();
-
     ///screen
     var sdate = new Date(inputValue);
-    
-   
     // if today is <= screen input ask for the month 
     return sdate > cdate;
 };
@@ -150,9 +157,9 @@ function validnumber(inputValue) {
     }
 };
 // ////credit card validation
-function validateCardNumber(inputValue) {
+function validateCardNumber(number) {
     var regex = new RegExp("^[0-9]{16}$");
-    if (!regex.test(inputValue)) return false;
+    if (!regex.test(number)) return false;
 
     return luhnCheck(number);
 };
@@ -188,7 +195,7 @@ function validcvv(inputValue) {
 function validaexpiration(inputValue) {
     var year = parseInt("20" + inputValue.split("/")[1]);
     var month = parseInt(inputValue.split("/")[0]);
-    debugger
+    
     if (isNaN(year) || isNaN(month)) {
         return false;
     }
@@ -207,29 +214,34 @@ function validaexpiration(inputValue) {
 };
 
 function CalculaTotal() {
-    var parkingDate = getParkingDate();
+    
+    
+    var parkingDate = document.getElementById('start-date').value;
     if (!parkingDate) {
         return;
     }
+    else {var sdate = new Date(parkingDate);}
 
     var numDays = parseInt(document.getElementById('days').value.trim());
 
     if (isNaN(numDays)) {
         return;
     }
-
+    
     var Cost = 0;
     for (var idx = 0; idx < numDays; idx++) {
-        var isWeekEnd = (parkingDate.getDay() % 6 === 0);
+        var isWeekEnd = (sdate.getDay() % 6 === 0);
         if (isWeekEnd) {
             Cost += 7;
         } else {
             Cost += 5;
         }
-        parkingDate.setHours(24);
+        // adding 1 day 
+        
+        sdate.setHours(24);
     }
 
     var costDiv = document.getElementById('total');
     costDiv.innerText = '$' + Cost;
-    return Cost;
+    
 }
